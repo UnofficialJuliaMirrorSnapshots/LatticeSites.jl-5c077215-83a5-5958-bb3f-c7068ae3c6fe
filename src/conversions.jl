@@ -34,9 +34,11 @@ end
 end
 
 # Arrays
+(::Type{T})(x::Bit) where {T <: Number} = T(x.value)
+
 for IntType in (:Int8, :Int16, :Int32, :Int64, :Int128, :BigInt)
 
-@eval Base.$IntType(x::Bit) = convert(IntType, x)
+@eval Base.$IntType(x::Bit) = convert($IntType, x)
 @eval Base.convert(::Type{$IntType}, x::Bit{T}) where T = convert($IntType, x.value)
 
 @eval begin
